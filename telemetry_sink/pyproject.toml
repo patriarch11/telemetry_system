@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13.4"
 dependencies = [
+    "aiofiles>=24.1.0",
     "pycryptodome>=3.23.0",
     "python-dotenv>=1.1.0",
     "zaichenko-engineer-telemetry-community-nipunn1313-mypy-grpc==3.6.0.1.20250622183011+2e812e491c9b",
@@ -18,4 +19,5 @@ url = "https://buf.build/gen/python"
 dev = [
     "mypy>=1.16.1",
     "ruff>=0.12.0",
+    "types-aiofiles>=24.1.0.20250606",
 ]

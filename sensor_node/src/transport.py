@@ -11,8 +11,8 @@ logger = logging.getLogger(__name__)
 
 class GrpcClient:
     def __init__(self, address: str, credentials: Optional[grpc.ChannelCredentials]):
-        self.address = address
-        self.credentials = credentials
+        self._address = address
+        self._credentials = credentials
 
     async def _run_session_on_channel(
         self,
@@ -31,15 +31,15 @@ class GrpcClient:
         self, request_iterator: AsyncIterator[telemetry_pb2.TelemetryRequest]
     ):
         try:
-            if self.credentials:
-                logger.info(f"Establishing secure connection to {self.address}")
+            if self._credentials:
+                logger.info(f"Establishing secure connection to {self._address}")
                 async with grpc.aio.secure_channel(
-                    self.address, self.credentials
+                    self._address, self._credentials
                 ) as channel:
                     await self._run_session_on_channel(channel, request_iterator)
             else:
-                logger.info(f"Establishing insecure connection to {self.address}")
-                async with grpc.aio.insecure_channel(self.address) as channel:
+                logger.info(f"Establishing insecure connection to {self._address}")
+                async with grpc.aio.insecure_channel(self._address) as channel:
                     await self._run_session_on_channel(channel, request_iterator)
 
         except grpc.aio.AioRpcError as e:
@@ -48,4 +48,4 @@ class GrpcClient:
             logger.info("Session cancelled. Closing connection...")
             raise
         except Exception as e:
-            logger.error(f"Failed to connect or run session with {self.address}: {e}")
+            logger.error(f"Failed to connect or run session with {self._address}: {e}")
