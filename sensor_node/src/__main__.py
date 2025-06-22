@@ -1,12 +1,9 @@
 import argparse
 import asyncio
 import logging
-import os
 
 import grpc
-from dotenv import load_dotenv
 
-from .crypto import CryptoEngine
 from .pipeline import pipeline
 from .sensor import Sensor
 from .transport import GrpcClient
@@ -77,20 +74,11 @@ async def main():
         "--client-key", help="Path to the client private key file (for mTLS)"
     )
 
-    load_dotenv()
     args = parser.parse_args()
-
-    key_hex = args.encryption_key or os.getenv("ENCRYPTION_KEY")
-    if not key_hex:
-        raise ValueError(
-            "Encryption key must be provided via --encryption-key or ENCRYPTION_KEY env var"
-        )
 
     grpc_client = GrpcClient(args.sink_address, create_ssl_credentials(args))
 
-    request_pipeline = pipeline(
-        Sensor(args.name), CryptoEngine(bytes.fromhex(key_hex)), args.rate
-    )
+    request_pipeline = pipeline(Sensor(args.name), args.rate)
 
     logger.info(f"Starting orchestrator for sensor '{args.name}'")
     while True:

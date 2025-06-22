@@ -9,10 +9,6 @@ service TelemetryService {
 }
 
 message TelemetryRequest {
-    bytes payload = 1;
-}
-
-message TelemetryData {
   string sensor_name = 1;
   int64 sensor_value = 2;
   google.protobuf.Timestamp timestamp = 3;
