@@ -1,9 +1,9 @@
+import asyncio
 import logging
 from typing import AsyncIterator, Optional
 
 import grpc
 import grpc.aio
-
 from telemetry.v1 import telemetry_pb2, telemetry_pb2_grpc
 
 logger = logging.getLogger(__name__)
@@ -44,5 +44,8 @@ class GrpcClient:
 
         except grpc.aio.AioRpcError as e:
             logger.error(f"RPC Error during session: {e.code()} - {e.details()}")
+        except asyncio.CancelledError:
+            logger.info("Session cancelled. Closing connection...")
+            raise
         except Exception as e:
             logger.error(f"Failed to connect or run session with {self.address}: {e}")

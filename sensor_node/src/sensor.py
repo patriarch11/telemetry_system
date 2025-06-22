@@ -1,7 +1,8 @@
 import random
-from telemetry.v1 import telemetry_pb2
-from google.protobuf.timestamp_pb2 import Timestamp
 from datetime import datetime, timezone
+
+from google.protobuf.timestamp_pb2 import Timestamp
+from telemetry.v1 import telemetry_pb2
 
 
 class Sensor:
