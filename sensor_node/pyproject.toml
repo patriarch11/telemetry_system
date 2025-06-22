@@ -1,0 +1,21 @@
+[project]
+name = "sensor-node"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13.4"
+dependencies = [
+    "pycryptodome>=3.23.0",
+    "python-dotenv>=1.1.0",
+    "zaichenko-engineer-telemetry-community-nipunn1313-mypy-grpc==3.6.0.1.20250622143112+d319fd8e6549",
+    "zaichenko-engineer-telemetry-grpc-python==1.73.0.1.20250622143112+d319fd8e6549",
+]
+
+[[tool.uv.index]]
+url = "https://buf.build/gen/python"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.16.1",
+    "ruff>=0.12.0",
+]

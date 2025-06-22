@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "sensor_node"
+    },
+    {
+      "path": "telemetry_sink"
+    },
+    {
+      "path": "proto"
+    }
+  ],
+  "settings": {
+    "cSpell.words": ["dotenv"]
+  }
+}
