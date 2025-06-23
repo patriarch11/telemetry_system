@@ -29,9 +29,9 @@ def parse_cli_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--buffer-size",
         type=int,
-        default=1024 * 1024,
+        default=1024,
         help="Buffer size in bytes before flushing",
-    )  # 1MB
+    )  # 1 kB
     parser.add_argument(
         "--flush-interval",
         type=float,
@@ -41,9 +41,9 @@ def parse_cli_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--rate-limit",
         type=int,
-        default=10 * 1024 * 1024,
+        default=1024,
         help="Max input rate in bytes/sec",
-    )  # 10 MB/s
+    )  # 1 kB/s
     parser.add_argument(
         "--encryption-key", help="32-byte encryption key in hex format (overrides .env)"
     )
@@ -133,11 +133,14 @@ async def main():
     await stop_event.wait()
 
     logger.info("Starting shutdown sequence...")
+
     await server.stop()
     buffer_flush_task.cancel()
     await asyncio.gather(server_task, buffer_flush_task, return_exceptions=True)
+
     logger.info("Performing final buffer flush...")
     await buffer.flush()
+
     logger.info("Application shut down gracefully.")
 
 
