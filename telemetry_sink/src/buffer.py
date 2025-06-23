@@ -58,7 +58,7 @@ class Buffer:
                 logger.info("Periodic flush task is stopping.")
                 break
 
-    async def add(self, message: str):
+    async def push(self, message: str):
         async with self._lock:
             self._buffer.append(message)
             self._current_size += len(message)
