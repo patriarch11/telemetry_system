@@ -32,11 +32,20 @@ chmod +x scripts/*.sh
 
 **b) Run the Setup Script**
 
-This script will automatically create virtual environments for both components, install all dependencies, generate certificates, and copy the `.env` file.
+This script will automatically create virtual environments for both components, install all dependencies, and copy the `.env` file.
 
 ```bash
 ./scripts/local_setup.sh
 ```
+
+**c) Generate certificates**
+This script will generate certificates.
+
+```bash
+./scripts/gen_certs.sh
+```
+
+This script will generate certificates
 
 ### 2. Running the Services
 
