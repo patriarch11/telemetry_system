@@ -22,7 +22,7 @@ class Buffer:
 
         self._lock = asyncio.Lock()
 
-    async def _flush(self) -> None:
+    async def flush(self) -> None:
         async with self._lock:
             if not self._buffer:
                 return
@@ -53,7 +53,7 @@ class Buffer:
         while True:
             try:
                 await asyncio.sleep(self._flush_interval)
-                await self._flush()
+                await self.flush()
             except asyncio.CancelledError:
                 logger.info("Periodic flush task is stopping.")
                 break
@@ -64,4 +64,4 @@ class Buffer:
             self._current_size += len(message)
 
         if self._current_size >= self._size:
-            asyncio.create_task(self._flush())
+            asyncio.create_task(self.flush())
