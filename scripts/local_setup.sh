@@ -19,7 +19,4 @@ echo "--- Setting up telemetry sink ---"
     uv venv
     uv sync
     cp .env.example .env
-    
-    echo "--- Creating certs --- "
-    bash $CERTS_SCRIPT
 )
